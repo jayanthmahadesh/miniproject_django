@@ -65,6 +65,7 @@ contract FundMe {
         funders = new address[](0);
         // // transfer
         // payable(msg.sender).transfer(address(this).balance);
+        // console.log("its comming here");
         // // send
         // bool sendSuccess = payable(msg.sender).send(address(this).balance);
         // require(sendSuccess, "Send failed");
@@ -75,7 +76,9 @@ contract FundMe {
         require(callSuccess, "Call failed");
     }
 
-
+    function getowner() public view returns (uint256) {
+        return 22;
+    }
 }
 
 // Concepts we didn't cover yet (will cover in later sections)
@@ -85,4 +88,4 @@ contract FundMe {
 // 4. Function Selector
 // 5. abi.encode / decode
 // 6. Hash with keccak256
-// 7. Yul / Assembly
+// 7. Yul / Assembly`

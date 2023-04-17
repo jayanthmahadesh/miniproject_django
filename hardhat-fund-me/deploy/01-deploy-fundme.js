@@ -16,6 +16,7 @@ const {
 const { verify } = require("../utils/verify");
 const { network } = require("hardhat");
 const ChainId = network.config.chainId;
+
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
@@ -29,6 +30,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     ethUsdpriceFeedaddress = networkConfig[ChainId]["ethUsdpriceFeed"];
   }
   console.log(`price feed address = ${ethUsdpriceFeedaddress}`);
+
   const fundMe = await deploy("FundMe", {
     from: deployer,
     args: [ethUsdpriceFeedaddress],
@@ -36,6 +38,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     // we need to wait if on a live network so we can verify properly
     waitConfirmations: network.config.blockConfirmations || 1,
   });
+
   console.log("_______________________");
   if (
     !developmentChains.includes(network.name) &&

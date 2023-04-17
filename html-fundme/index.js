@@ -4,10 +4,12 @@ const connectbutton = document.getElementById("connectButton");
 const fundbutton = document.getElementById("fund");
 const balanceButton = document.getElementById("getBalance");
 const withdrawbutton = document.getElementById("withdraw");
+const getownerbutton = document.getElementById("getowner");
 connectbutton.onclick = connect;
 fundbutton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawbutton.onclick = withdraw;
+getownerbutton.onclick = getowner;
 async function connect() {
   console.log("jayanth")
   if (typeof window.ethereum !== "undefined") {
@@ -74,4 +76,17 @@ async function withdraw() {
       alert("you are not the owner");
     }
   }
+}
+
+async function getowner(){
+  if (typeof window.ethereum !== "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+  
+      const transactionResponse = await contract.getowner();
+      console.log(transactionResponse);
+   
+  }
+ 
 }

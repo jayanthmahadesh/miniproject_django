@@ -7,11 +7,11 @@ require("hardhat-gas-reporter");
 
 const SEPOLIA_RPC_URL =
   process.env.SEPOLIA_RPC_URL ||
-  "https://eth-sepolia.g.alchemy.com/v2/YOUR-API-KEY";
+  "https://eth-sepolia.g.alchemy.com/v2/T6FRgl4kfWjI9VGCM1ylPRXpLD43v0PD";
 console.log(`rpc url ${SEPOLIA_RPC_URL}`);
 const PRIVATE_KEY =
   process.env.PRIVATE_KEY ||
-  "0x11ee3108a03081fe260ecdc106554d09d9d1209bcafd46942b10e02943effc4a";
+  "06f9fd726688a653ffdaa24551d75fcdbde202e07d8273d0a65629370751cc19";
 const ETHERSCAN_API_KEY = process.env.ETHER_SCAN_APIKEY || "";
 module.exports = {
   // solidity: "0.8.8",
