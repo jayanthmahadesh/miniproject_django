@@ -76,8 +76,8 @@ contract FundMe {
         require(callSuccess, "Call failed");
     }
 
-    function getowner() public view returns (uint256) {
-        return 22;
+    function getowner() public view returns (address) {
+        return (i_owner);
     }
 }
 
