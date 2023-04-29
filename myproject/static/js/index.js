@@ -11,7 +11,7 @@ balanceButton.onclick = getBalance;
 withdrawbutton.onclick = withdraw;
 getownerbutton.onclick = getowner;
 async function connect() {
-  console.log("jayanth")
+  // console.log("jayanth")
   if (typeof window.ethereum !== "undefined") {
     try {
       await ethereum.request({ method: "eth_requestAccounts" });
@@ -39,7 +39,7 @@ async function fund() {
   if (typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    console.log(signer);
+    console.log(`this is signer ${signer}`);
     const contract = new ethers.Contract(contractAddress, abi, signer);
     try {
       const transactionResponse = await contract.fund({
@@ -79,14 +79,68 @@ async function withdraw() {
 }
 
 async function getowner(){
+  var address;
+  var signer;
   if (typeof window.ethereum !== "undefined") {
+    try{
+    }
+    catch{
+      console.log("exception");
+    }
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    const prov = window.ethereum;
+    prov.request({ method: 'eth_requestAccounts' })
+    .then((accounts) => {
+      // Get the user's address
+    address = accounts[0];
+      console.log(`Metamask account address: ${address}`);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    signer = provider.getSigner(); //signer is the user who has currently signed in 
     const contract = new ethers.Contract(contractAddress, abi, signer);
+    const transactionResponse = await contract.getowner();
+    console.log(signer)
   
-      const transactionResponse = await contract.getowner();
-      console.log(transactionResponse);
+    console.log(`owner is ${transactionResponse}`);
+    console.log("inside getowner")
    
   }
- 
+  else console.log("else part")
+
+  // posting data to the backend
+
+  const data = {my_data: address};
+  console.log(`data is ${data}`);
+  const csrf_token = getCookie('csrftoken'); // getCookie() is a custom function that retrieves the value of the 'csrftoken' cookie
+fetch('/my-view-url/', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrf_token , // Include the CSRF token for security
+  },
+  body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
 }
+
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+

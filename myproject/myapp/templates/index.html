@@ -4,9 +4,9 @@
     <title>FundMe</title>
 </head>
 <body>
-
-<script src="./index.js" type="module">
-  
+    {% load static %}  
+{% comment %} <script src="./index.js" type="module"> {% endcomment %}
+    <script src="{% static 'js/index.js' %}" type="module">  
 </script>
 <button id="connectButton">Connect 
     <button id="fund">fund</button>

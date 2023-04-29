@@ -73,7 +73,7 @@ contract FundMe {
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        require(callSuccess, "Call failed");
+        require(callSuccess, "Call ffailed");
     }
 
     function getowner() public view returns (address) {
