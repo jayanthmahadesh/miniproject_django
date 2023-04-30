@@ -35,6 +35,7 @@ async function getBalance() {
 }
 
 async function fund() {
+  var address;
   const ethAmount = document.getElementById("ethAmount").value;
   if (typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -46,8 +47,37 @@ async function fund() {
         value: ethers.utils.parseEther(ethAmount),
       });
       await listenforTransactionMine(transactionResponse, provider);
-
       console.log("done");
+
+      //data sending to backend
+      const prov = window.ethereum;
+      prov.request({ method: 'eth_requestAccounts' })
+      .then((accounts) => {
+        // Get the user's address
+      address = accounts[0];
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      const transactionResponsedata = await contract.getowner();
+      console.log(`owner is ${transactionResponsedata}`);
+      console.log(`current signed account is ${address}`)
+
+      //form to the backend
+
+      const data = {fromaddress: address,toaddress:transactionResponsedata,amount:ethAmount};
+      const csrf_token = getCookie('csrftoken'); // getCookie() is a custom function that retrieves the value of the 'csrftoken' cookie
+      fetch('/my-view-url/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrf_token , // Include the CSRF token for security
+      },
+      body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => console.log(data));
+      // .catch(error => console.error(error));
     } catch {
       console.log("transaction rejected");
     }
@@ -82,11 +112,6 @@ async function getowner(){
   var address;
   var signer;
   if (typeof window.ethereum !== "undefined") {
-    try{
-    }
-    catch{
-      console.log("exception");
-    }
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const prov = window.ethereum;
     prov.request({ method: 'eth_requestAccounts' })
@@ -98,10 +123,11 @@ async function getowner(){
     .catch((error) => {
       console.error(error);
     });
+    
     signer = provider.getSigner(); //signer is the user who has currently signed in 
     const contract = new ethers.Contract(contractAddress, abi, signer);
     const transactionResponse = await contract.getowner();
-    console.log(signer)
+    // console.log(signer)
   
     console.log(`owner is ${transactionResponse}`);
     console.log("inside getowner")
@@ -112,13 +138,14 @@ async function getowner(){
   // posting data to the backend
 
   const data = {my_data: address};
-  console.log(`data is ${data}`);
+  console.log(`data adsf is ${data['my_data']}`);
   const csrf_token = getCookie('csrftoken'); // getCookie() is a custom function that retrieves the value of the 'csrftoken' cookie
 fetch('/my-view-url/', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
     'X-CSRFToken': csrf_token , // Include the CSRF token for security
+
   },
   body: JSON.stringify(data),
   })
