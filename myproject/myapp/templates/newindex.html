@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}  
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
+    <!-- <script src="{% static 'js/index.js' %}" type="module"> </script> -->
+    <script src="{% static 'js/index.js' %}" type="module">  
+    </script>
+    <!-- <script src="./index.js" type="module">
+    </script> -->
+</head>
+<body>
+   
+    <div class='header'>
+        <div class='header_logo_image'>
+            <img class='ImageLogo' src="{% static 'images/logo.png' %}"></img>
+        </div>
+        <div class='header_links' id="connectButton">Connect Wallet</div>
+        <div class='header_links' id="transaction">Transactions</div>
+        <div class='header_links' id="getBalance">Get Balance</div>
+        <div class='header_links' id="withdraw">Withdraw</div>
+      </div>
+      <div class='Description'>
+        <div class='Left-Description'>
+            <img class='TitleLogo' src="{%static 'images/MineTOLLBLOCK.jpg'%}"></img>
+        </div>
+        <div class='Right-Description'>
+        A toll-based system on blockchain is a digital payment system that uses blockchain technology to securely and transparently process toll transactions. This system eliminates the need for physical tollbooths and cash payments, making toll payment faster and more convenient for drivers. Each toll transaction is recorded on the blockchain, ensuring that it is tamper-proof and can be easily audited. The system also allows for easy integration with different payment methods, making it accessible to a wider range of users.
+        </div>
+    </div>
+    <input class='ethinput' type="text" id="ethAmount" placeholder="0.1">
+    <div class='header_links' id="fund">Pay toll</div>
+   
+
+</body>
+
+</html>

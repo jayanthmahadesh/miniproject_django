@@ -4,12 +4,13 @@ const connectbutton = document.getElementById("connectButton");
 const fundbutton = document.getElementById("fund");
 const balanceButton = document.getElementById("getBalance");
 const withdrawbutton = document.getElementById("withdraw");
-const getownerbutton = document.getElementById("getowner");
+const transactionbutton = document.getElementById("transaction");
 connectbutton.onclick = connect;
 fundbutton.onclick = fund;
 balanceButton.onclick = getBalance;
 withdrawbutton.onclick = withdraw;
-getownerbutton.onclick = getowner;
+transactionbutton.onclick = transaction;
+// getownerbutton.onclick = getowner;
 async function connect() {
   // console.log("jayanth")
   if (typeof window.ethereum !== "undefined") {
@@ -75,8 +76,8 @@ async function fund() {
       },
       body: JSON.stringify(data),
       })
-      .then(response => response.json())
-      .then(data => console.log(data));
+      .then(response => response.json());
+      // .then(data => console.log(data));
       // .catch(error => console.error(error));
     } catch {
       console.log("transaction rejected");
@@ -107,6 +108,44 @@ async function withdraw() {
     }
   }
 }
+async function transaction(){
+  var address;
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  console.log(`this is signer ${signer}`);
+  const contract = new ethers.Contract(contractAddress, abi, signer);
+    //data sending to backend
+    const prov = window.ethereum;
+    prov.request({ method: 'eth_requestAccounts' })
+    .then((accounts) => {
+      // Get the user's address
+    address = accounts[0];
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    const transactionResponsedata = await contract.getowner();
+    console.log(`owner is ${transactionResponsedata}`);
+    console.log(`current signed account is ${address}`)
+// console.log(`the first sentence ${address}`)
+// sendting from address to backend
+var form = document.createElement('form');
+form.method = 'POST';
+form.action = "transaction"; // Replace "my_view" with the name of your Django view
+
+// Create an input element
+var input = document.createElement('input');
+input.type = 'hidden';
+input.name = 'my_input'; // Replace "my_input" with the name of the key that you will use to access the data in the Django view
+input.value = address; // Replace "some data" with the actual data that you want to send
+
+// Add the input element to the form
+form.appendChild(input);
+
+// Add the form to the document and submit it
+document.body.appendChild(form);
+form.submit();
+  }
 
 async function getowner(){
   var address;

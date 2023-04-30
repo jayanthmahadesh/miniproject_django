@@ -20,16 +20,31 @@ def homepage(request):
 #         return JsonResponse({'success': True})
 
 def my_view(request):
-    # form= transactionform(request.POST)
-    # print("here1")
-    # if form.is_valid():
-    #     print("here2")
-    #     form.save()
-    # context= {'form': form }
     if request.method=='POST':
         data = json.loads(request.body)
-        print(data['fromaddress'])
-        print(type(data['fromaddress']))
-        print(type(data))
         ret = transactions.objects.create(fromaddress=data['fromaddress'],toaddress=data['toaddress'],amount=data['amount'])
     return redirect('/')
+def testing(request):
+    return render(request,'newindex.html')
+@csrf_exempt
+def transaction(request):
+    print("comming here jauanth ")
+    if request.method == 'POST':
+        my_input = request.POST.get('my_input')
+        # print(my_input)
+        currentusertransaction = transactions.objects.filter(fromaddress = my_input)
+        context = {
+            'currentusertransaction':currentusertransaction,
+        }
+        print(currentusertransaction)
+    return render(request,'transaction.html',context)
+        
+    
+    # Return a JSON response containing the HTML string
+    # if request.method=='POST':
+        # data = json.loads(request.body)
+        # print(data['fromaddress'])
+        # prev_transactions = transactions.objects.filter(fromaddress=fromaddress)
+        # print(prev_transactions)
+        # return redirect(request,'index.html')
+    
