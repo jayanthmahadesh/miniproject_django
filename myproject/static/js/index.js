@@ -32,6 +32,8 @@ async function getBalance() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const balance = await provider.getBalance(contractAddress);
     console.log(ethers.utils.formatEther(balance));
+    alert("account balance is : "+ethers.utils.formatEther(balance));
+
   }
 }
 
