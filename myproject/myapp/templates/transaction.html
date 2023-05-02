@@ -6,29 +6,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+{% load static %}  
 <style>
     table, th, td {
       border:1px solid black;
+  
     }
+    .one{
+        padding-left: 15px;
+    }
+    .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+  margin-right: auto;
+}
+.styled-table thead tr {
+  background-color: rgba(0, 0, 0, 0.55);
+
+    color: #ffffff;
+    text-align: left;
+   
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: rgba(255, 255, 255, 0.25);
+    
+}
+.styled-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(81, 104, 100, 0.15);
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #323232;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #ffffff;
+}
+body{
+  background-image: url("{% static 'images/background_transaction.avif' %}");
+}
+.backbutton{
+  position: absolute;
+  top: 0;
+margin-top: 20px;
+margin-left: 20px;
+text-decoration: none;
+color: white;
+}
+
     </style>
 <body>
-    <table>
-        <tr>
-          <th>to address</th>
-          <th>amount</th>
-          <th>time</th>
-        </tr>
-        {%for i in currentusertransaction%}
-        <tr>
-            <td>{{i.toaddress}}</td>
-            <td>{{i.amount}}</td>
-            <td>{{i.created_at}}</td>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>To address</th>
+            <th>Amount</th>
+            <th>Time</th>
           </tr>
-        {%endfor%}
-      </table>
-   {%for i in currentusertransaction%}
-    
-   {%endfor%}
-   <a href="/testing">home</a>
+        </thead>
+        <tbody>
+          {%for i in currentusertransaction%}
+          <tr class="active-row">
+              <td>{{i.toaddress}}</td>
+              <td class="one">{{i.amount}}</td>
+              <td>{{i.created_at}}</td>
+            </tr>
+          {%endfor%}
+        </tbody>
+    </table>
+   <a class="backbutton" href="/testing">Home</a>
 </body>
 </html>

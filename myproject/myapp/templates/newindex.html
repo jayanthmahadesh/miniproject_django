@@ -13,6 +13,12 @@
     <!-- <script src="./index.js" type="module">
     </script> -->
 </head>
+<style>
+    body{
+        background-image: url("{% static 'images/background_transaction.avif' %}");
+    }
+</style>
+
 <body>
    
     <div class='header'>
@@ -26,14 +32,14 @@
       </div>
       <div class='Description'>
         <div class='Left-Description'>
-            <img class='TitleLogo' src="{%static 'images/MineTOLLBLOCK.jpg'%}"></img>
+            <img class='TitleLogo' src="{%static 'images/coins.jpeg'%}"></img>
         </div>
         <div class='Right-Description'>
         A toll-based system on blockchain is a digital payment system that uses blockchain technology to securely and transparently process toll transactions. This system eliminates the need for physical tollbooths and cash payments, making toll payment faster and more convenient for drivers. Each toll transaction is recorded on the blockchain, ensuring that it is tamper-proof and can be easily audited. The system also allows for easy integration with different payment methods, making it accessible to a wider range of users.
         </div>
     </div>
     <input class='ethinput' type="text" id="ethAmount" placeholder="0.1">
-    <div class='header_links' id="fund">Pay toll</div>
+    <div class='header_links inputbutton' id="fund" >Pay toll</div>
    
 
 </body>
